@@ -22,25 +22,7 @@ typedef int32_t			pixman_fixed_16_16_t;
 typedef pixman_fixed_16_16_t	pixman_fixed_t;
 ]]
 
---[[
-#define pixman_fixed_e			((pixman_fixed_t) 1)
-#define pixman_fixed_1			(pixman_int_to_fixed(1))
-#define pixman_fixed_1_minus_e		(pixman_fixed_1 - pixman_fixed_e)
-#define pixman_fixed_minus_1		(pixman_int_to_fixed(-1))
 
-#define pixman_fixed_to_int(f)		((int) ((f) >> 16))
-#define pixman_int_to_fixed(i)		((pixman_fixed_t) ((i) << 16))
-#define pixman_fixed_to_double(f)	(double) ((f) / (double) pixman_fixed_1)
-#define pixman_double_to_fixed(d)	((pixman_fixed_t) ((d) * 65536.0))
-#define pixman_fixed_frac(f)		((f) & pixman_fixed_1_minus_e)
-#define pixman_fixed_floor(f)		((f) & ~pixman_fixed_1_minus_e)
-#define pixman_fixed_ceil(f)		pixman_fixed_floor ((f) + pixman_fixed_1_minus_e)
-#define pixman_fixed_fraction(f)	((f) & pixman_fixed_1_minus_e)
-#define pixman_fixed_mod_2(f)		((f) & (pixman_fixed1 | pixman_fixed_1_minus_e))
-
-#define pixman_max_fixed_48_16		((pixman_fixed_48_16_t) 0x7fffffff)
-#define pixman_min_fixed_48_16		(-((pixman_fixed_48_16_t) 1 << 31))
---]]
 
 ffi.cdef[[
 /*
@@ -564,13 +546,13 @@ struct pixman_indexed
 
 
 -- Some quick macros
-local function PIXMAN_FORMAT(bpp,type,a,r,g,b)	
-    return bor(lshift((bpp), 24), 
-					 lshift((type), 16), 
-					 lshift((a), 12),  
-					 lshift((r), 8),	  
-					 lshift((g), 4),	  
-					 ((b)))
+local function PIXMAN_FORMAT(bpp,atype,a,r,g,b)	
+    return bor(lshift(bpp, 24), 
+					 lshift(atype, 16), 
+					 lshift(a, 12),  
+					 lshift(r, 8),	  
+					 lshift(g, 4),	  
+					 (b))
 end
 
 
@@ -609,10 +591,10 @@ local Constants = {
 local C = Constants;
 
 local function PIXMAN_FORMAT_COLOR(f)				
-	return (PIXMAN_FORMAT_TYPE(f) == PIXMAN_TYPE_ARGB or
-	 PIXMAN_FORMAT_TYPE(f) == PIXMAN_TYPE_ABGR or
-	 PIXMAN_FORMAT_TYPE(f) == PIXMAN_TYPE_BGRA or	
-	 PIXMAN_FORMAT_TYPE(f) == PIXMAN_TYPE_RGBA)
+	return (PIXMAN_FORMAT_TYPE(f) == C.PIXMAN_TYPE_ARGB or
+	 PIXMAN_FORMAT_TYPE(f) == C.PIXMAN_TYPE_ABGR or
+	 PIXMAN_FORMAT_TYPE(f) == C.PIXMAN_TYPE_BGRA or	
+	 PIXMAN_FORMAT_TYPE(f) == C.PIXMAN_TYPE_RGBA)
 end
 
 local tbl = {}
@@ -862,29 +844,6 @@ void          pixman_image_composite32        (pixman_op_t        op,
 					       int32_t            height);
 ]]
 
---[[
-TODO - WAA
-Can probably just leave this function out altogether
-/* Executive Summary: This function is a no-op that only exists
- * for historical reasons.
- *
- * There used to be a bug in the X server where it would rely on
- * out-of-bounds accesses when it was asked to composite with a
- * window as the source. It would create a pixman image pointing
- * to some bogus position in memory, but then set a clip region
- * to the position where the actual bits were.
- *
- * Due to a bug in old versions of pixman, where it would not clip
- * against the image bounds when a clip region was set, this would
- * actually work. So when the pixman bug was fixed, a workaround was
- * added to allow certain out-of-bound accesses. This function disabled
- * those workarounds.
- *
- * Since 0.21.2, pixman doesn't do these workarounds anymore, so now this
- * function is a no-op.
- */
-void pixman_disable_out_of_bounds_workaround (void);
---]]
 
 ffi.cdef[[
 /*
@@ -991,14 +950,10 @@ struct pixman_triangle
 };
 ]]
 
---[[
-TODO - WAA
-/* whether 't' is a well defined not obviously empty trapezoid */
-#define pixman_trapezoid_valid(t)				   \
-    ((t)->left.p1.y != (t)->left.p2.y &&			   \
-     (t)->right.p1.y != (t)->right.p2.y &&			   \
-     ((t)->bottom > (t)->top))
---]]
+
+
+
+
 
 
 ffi.cdef[[
@@ -1077,27 +1032,6 @@ void	      pixman_add_triangles       (pixman_image_t              *image,
 					  const pixman_triangle_t     *tris);
 ]]
 
+local lib = ffi.load("pixman-1")
 
-
-
-
-
-local exports = {
-    Constants = Constants;
-    Enums = Enums;
-    Functions = Functions;
-}
-
-setmetatable(exports, {
-    -- export functions to specified table
-    __call = function(self, tbl)
-        tbl = tbl or _G;
-            for k,v in pairs(exports) do
-                for key, value in pairs(v) do
-                    tbl[key] = value;
-                end
-            end
-    end,
-})
-
-return exports
+return lib
