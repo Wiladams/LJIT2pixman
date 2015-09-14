@@ -952,10 +952,6 @@ struct pixman_triangle
 
 
 
-
-
-
-
 ffi.cdef[[
 struct pixman_span_fix
 {
