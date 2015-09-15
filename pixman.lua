@@ -52,6 +52,10 @@ setmetatable(exports, {
             tbl[k] = v;
         end
 
+        for k,v in pairs(self.Functions) do
+            tbl[k] = v;
+        end
+        
         return self;
     end,
 })
