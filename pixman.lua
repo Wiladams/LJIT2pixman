@@ -6,7 +6,37 @@ local lshift, rshift = bit.lshift, bit.rshift;
 local Lib_pixman = require("pixman_ffi")
 
 local Constants = {}
-local Functions = {}
+
+--[[
+    Filling out this list of functions is a convenience for putting the 
+    functions pointers into the global namespace.  This table is needed
+    in the least, as you can access the functions more quickly using the
+    library references directly.
+--]]
+local Functions = {
+    -- Transforms
+    -- Regions
+    -- Compositing
+    pixman_compute_composite_region = Lib_pixman.pixman_compute_composite_region;
+    pixman_image_composite = Lib_pixman.pixman_image_composite;
+    pixman_image_composite32 = Lib_pixman.pixman_image_composite32;
+
+    -- Glyphs
+
+    -- Trapezoid Library Functions
+    pixman_sample_ceil_y = Lib_pixman.pixman_sample_ceil_y;
+    pixman_sample_floor_y = Lib_pixman.pixman_sample_floor_y;
+    pixman_edge_step = Lib_pixman.pixman_edge_step;
+    pixman_edge_init = Lib_pixman.pixman_edge_init;
+    pixman_line_fixed_edge_init = Lib_pixman.pixman_line_fixed_edge_init;
+    pixman_rasterize_edges = Lib_pixman.pixman_rasterize_edges;
+    pixman_add_traps = Lib_pixman.pixman_add_traps;
+    pixman_add_trapezoids = Lib_pixman.pixman_add_trapezoids;
+    pixman_rasterize_trapezoid = Lib_pixman.pixman_rasterize_trapezoid;
+    pixman_composite_trapezoids = Lib_pixman.pixman_composite_trapezoids;
+    pixman_composite_triangles = Lib_pixman.pixman_composite_triangles;
+    pixman_add_triangles = Lib_pixman.pixman_add_triangles;
+}
 
 function Functions.pixman_fixed_to_int(f) return ffi.cast("int", rshift((f), 16)) end;
 function Functions.pixman_int_to_fixed(i) return ffi.cast("pixman_fixed_t", lshift(i, 16)) end;
