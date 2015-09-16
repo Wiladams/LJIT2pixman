@@ -8,7 +8,7 @@ local pixman = require("pixman")()
 local pixlib = pixman.Lib_pixman;
 local ENUM = ffi.C
 local utils = require("utils")
-local show_image = utils.show_image;
+local save_image = utils.save_image;
 
 local function D2F(d) return (pixman_double_to_fixed(d)) end
 
@@ -18,9 +18,6 @@ local function main (argc, argv)
 	local HEIGHT = 400;
 	local TILE_SIZE = 25;
 
-    --pixman_image_t *checkerboard;
-    --pixman_image_t *destination;
-
     local trans = ffi.new("pixman_transform_t", { {
 	    { D2F (-1.96830), D2F (-1.82250), D2F (512.12250)},
 	    { D2F (0.00000), D2F (-7.29000), D2F (1458.00000)},
@@ -29,11 +26,11 @@ local function main (argc, argv)
 
     local checkerboard = pixlib.pixman_image_create_bits (ENUM.PIXMAN_a8r8g8b8,
 					     WIDTH, HEIGHT,
-					     NULL, 0);
+					     nil, 0);
 
     local destination = pixlib.pixman_image_create_bits (ENUM.PIXMAN_a8r8g8b8,
 					    WIDTH, HEIGHT,
-					    NULL, 0);
+					    nil, 0);
 
     for i = 0, (HEIGHT / TILE_SIZE)-1  do
 		for j = 0, (WIDTH / TILE_SIZE)-1 do
@@ -69,7 +66,7 @@ local function main (argc, argv)
 			    0, 0, 0, 0, 0, 0,
 			    WIDTH, HEIGHT);
 
-	show_image (destination);
+	save_image (destination);
 
     return true;
 end
