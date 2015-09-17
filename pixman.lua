@@ -16,6 +16,32 @@ local Constants = {}
 local Functions = {
     -- Transforms
     -- Regions
+    pixman_region_init = Lib_pixman.pixman_region_init;
+    pixman_region_init_rect = Lib_pixman.pixman_region_init_rect;
+    pixman_region_init_rects = Lib_pixman.pixman_region_init_rects;
+    pixman_region_init_with_extents = Lib_pixman.pixman_region_init_with_extents;
+    pixman_region_init_from_image = Lib_pixman.pixman_region_init_from_image;
+    pixman_region_fini = Lib_pixman.pixman_region_fini;
+    pixman_region_translate = Lib_pixman.pixman_region_translate;
+    pixman_region_copy = Lib_pixman.pixman_region_copy;
+    pixman_region_intersect = Lib_pixman.pixman_region_intersect;
+    pixman_region_union = Lib_pixman.pixman_region_union;
+    pixman_region_union_rect = Lib_pixman.pixman_region_union_rect;
+    pixman_region_intersect_rect = Lib_pixman.pixman_region_intersect_rect;
+    pixman_region_subtract = Lib_pixman.pixman_region_subtract;
+    pixman_region_inverse = Lib_pixman.pixman_region_inverse;
+    pixman_region_contains_point = Lib_pixman.pixman_region_contains_point;
+    pixman_region_contains_rectangle = Lib_pixman.pixman_region_contains_rectangle;
+    pixman_region_not_empty = Lib_pixman.pixman_region_not_empty;
+    pixman_region_extents = Lib_pixman.pixman_region_extents;
+    pixman_region_n_rects = Lib_pixman.pixman_region_n_rects;
+    pixman_region_rectangles = Lib_pixman.pixman_region_rectangles;
+    pixman_region_equal = Lib_pixman.pixman_region_equal;
+    pixman_region_selfcheck = Lib_pixman.pixman_region_selfcheck;
+    pixman_region_reset = Lib_pixman.pixman_region_reset;
+    pixman_region_clear = Lib_pixman.pixman_region_clear;
+
+    -- Region32
     -- Compositing
     pixman_compute_composite_region = Lib_pixman.pixman_compute_composite_region;
     pixman_image_composite = Lib_pixman.pixman_image_composite;

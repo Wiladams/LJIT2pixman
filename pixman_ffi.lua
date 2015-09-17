@@ -131,7 +131,9 @@ struct pixman_f_transform
 {
     double  m[3][3];
 };
+]]
 
+ffi.cdef[[
 pixman_bool_t pixman_transform_from_pixman_f_transform (struct pixman_transform         *t,
 							const struct pixman_f_transform *ft);
 void          pixman_f_transform_from_pixman_transform (struct pixman_f_transform       *ft,
@@ -303,7 +305,7 @@ typedef enum
     PIXMAN_REGION_PART
 } pixman_region_overlap_t;
 ]]
-
+--[[
 ffi.cdef[[
 /* This function exists only to make it possible to preserve
  * the X ABI - it should go away at first opportunity.
@@ -312,7 +314,7 @@ void pixman_region_set_static_pointers (pixman_box16_t         *empty_box,
 					pixman_region16_data_t *empty_data,
 					pixman_region16_data_t *broken_data);
 ]]
-
+--]]
 ffi.cdef[[
 /* creation/destruction */
 void                    pixman_region_init               (pixman_region16_t *region);
@@ -413,7 +415,9 @@ struct pixman_region32
     pixman_box32_t          extents;
     pixman_region32_data_t  *data;
 };
+]]
 
+ffi.cdef[[
 /* creation/destruction */
 void                    pixman_region32_init               (pixman_region32_t *region);
 void                    pixman_region32_init_rect          (pixman_region32_t *region,
