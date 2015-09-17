@@ -42,6 +42,15 @@ local Functions = {
     pixman_region_clear = Lib_pixman.pixman_region_clear;
 
     -- Region32
+    -- Miscellaneous
+    -- Image Constructors
+    pixman_image_create_solid_fill = Lib_pixman.pixman_image_create_solid_fill;
+    pixman_image_create_linear_gradient = Lib_pixman.pixman_image_create_linear_gradient;
+    pixman_image_create_radial_gradient = Lib_pixman.pixman_image_create_radial_gradient;
+    pixman_image_create_conical_gradient = Lib_pixman.pixman_image_create_conical_gradient;
+    pixman_image_create_bits = Lib_pixman.pixman_image_create_bits;
+    pixman_image_create_bits_no_clear = Lib_pixman.pixman_image_create_bits_no_clear;
+
     -- Compositing
     pixman_compute_composite_region = Lib_pixman.pixman_compute_composite_region;
     pixman_image_composite = Lib_pixman.pixman_image_composite;
