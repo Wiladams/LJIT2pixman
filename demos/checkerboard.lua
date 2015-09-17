@@ -66,7 +66,7 @@ local function main (argc, argv)
 			    0, 0, 0, 0, 0, 0,
 			    WIDTH, HEIGHT);
 
-	save_image (destination);
+	save_image (destination, "checkerboard.ppm");
 
     return true;
 end

@@ -1,10 +1,68 @@
 -- utils.lua
 local ffi = require("ffi")
+local bit = require("bit")
+local band, bor, lshift, rshift, bxor = bit.band, bit.bor, bit.lshift, bit.rshift, bit.bxor
+
 local pixman = require("pixman")
 local pixlib = pixman.Lib_pixman
 local libc = require("libc")()
 
 local int = ffi.typeof("int")
+local ENUM = ffi.C
+local floor = math.floor;
+
+
+local function ARRAY_LENGTH(arr)
+	return ffi.sizeof(arr)/ffi.sizeof(arr[0])
+end
+
+local function color8_to_color16 (color8, color16)
+
+    color16.alpha = rshift(band(color8, 0xff000000), 24);
+    color16.red =   rshift(band(color8, 0x00ff0000), 16);
+    color16.green = rshift(band(color8, 0x0000ff00), 8);
+    color16.blue =  rshift(band(color8, 0x000000ff), 0);
+
+    color16.alpha = bor(color16.alpha, lshift(color16.alpha, 8));
+    color16.red   = bor(color16.red, lshift(color16.red, 8));
+    color16.blue  = bor(color16.blue, lshift(color16.blue, 8));
+    color16.green = bor(color16.green, lshift(color16.green, 8));
+end
+
+local function draw_checkerboard (image,check_size, color1, color2)
+
+    local check1 = ffi.new("pixman_color_t")
+    local check2 = ffi.new("pixman_color_t")
+    color8_to_color16 (color1, check1);
+    color8_to_color16 (color2, check2);
+    
+    local c1 = pixlib.pixman_image_create_solid_fill (check1);
+    local c2 = pixlib.pixman_image_create_solid_fill (check2);
+
+    local n_checks_x = floor((pixlib.pixman_image_get_width (image) + check_size - 1) / check_size);
+    local n_checks_y = floor((pixlib.pixman_image_get_height (image) + check_size - 1) / check_size);
+
+print("checks_x, checks_y: ", n_checks_x, n_checks_y)
+
+    for j = 0, n_checks_y-1 do
+		for i = 0, n_checks_x-1 do
+	
+	    	local src = nil;
+
+	    	if band(bxor(i, j), 1) > 0 then
+				src = c1;
+	    	else
+				src = c2;
+			end
+
+	    	pixlib.pixman_image_composite32 (ENUM.PIXMAN_OP_SRC, src, nil, image,
+				0, 0, 0, 0,
+				i * check_size, j * check_size,
+				check_size, check_size);
+		end
+    end
+end
+
 
 local function  write_PPM_binary(filename, bits, width, height, stride)
 
@@ -63,8 +121,12 @@ end
 
 
 local exports = {
-	save_image = save_image;
+	ARRAY_LENGTH = ARRAY_LENGTH;
+	color8_to_color16 = color8_to_color16;
+	draw_checkerboard = draw_checkerboard;
 	print_image = print_image;
+	save_image = save_image;
+
 }
 
 return exports
