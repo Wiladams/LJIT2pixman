@@ -2,6 +2,10 @@
 local ffi = require("ffi")
 
 ffi.cdef[[
+// string.h
+void *memset (void *, int, size_t);
+
+
 // Memory
 void free(void *);
 void * malloc(const size_t size);
@@ -20,10 +24,12 @@ size_t fwrite(const void *__restrict, size_t, size_t, FILE *__restrict);
 ]]
 
 local exports = {
+
 	-- Memory Management
 	free = ffi.C.free;
 	malloc = ffi.C.malloc;
-	
+	memset = ffi.C.memset;
+		
 	-- File manipulation
 	fopen = ffi.C.fopen;
 	fclose = ffi.C.fclose;
