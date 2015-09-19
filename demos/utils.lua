@@ -64,6 +64,12 @@ print("checks_x, checks_y: ", n_checks_x, n_checks_y)
 end
 
 
+--[[
+	Write out an image using the binary PPM format (P6)
+	This format has R,G,B, so it's 24-bit, NOT 32-bit
+	It's fairly big on its own, but will compress nicely using
+	any standard compression algorithm.
+--]]
 local function  write_PPM_binary(filename, bits, width, height, stride)
 
 	local fp = libc.fopen(filename, "wb");

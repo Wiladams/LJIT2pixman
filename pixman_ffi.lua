@@ -676,6 +676,7 @@ table.insert(tbl, string.format("PIXMAN_yv12 = 0x%x", PIXMAN_FORMAT(12,C.PIXMAN_
 table.insert(tbl, "} pixman_format_code_t;]]");
 
 local tblstr = table.concat(tbl,'\n')
+--print(tblstr)
 -- now get the definitions as a giant string
 -- and execute it
 local defs = loadstring(tblstr);

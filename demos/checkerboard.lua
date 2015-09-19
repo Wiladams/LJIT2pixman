@@ -32,16 +32,17 @@ local function main (argc, argv)
 					    WIDTH, HEIGHT,
 					    nil, 0);
 
+	local black = ffi.new("pixman_color_t", { 0, 0, 0, 0xffff });
+	local white = ffi.new("pixman_color_t", { 0xffff, 0xffff, 0xffff, 0xffff });
+
     for i = 0, (HEIGHT / TILE_SIZE)-1  do
 		for j = 0, (WIDTH / TILE_SIZE)-1 do
 	    	local u = (j + 1) / (WIDTH / TILE_SIZE);
 	    	local v = (i + 1) / (HEIGHT / TILE_SIZE);
-	    	local black = ffi.new("pixman_color_t", { 0, 0, 0, 0xffff });
-	    	local white = ffi.new("pixman_color_t", {
-				v * 0xffff,
-				u * 0xffff,
-				(1 - u) * 0xffff,
-				0xffff });
+	    	
+	    	white.red = v * 0xffff;
+	    	white.green = u * 0xffff;
+	    	white.blue = (1 - u) * 0xffff;
 	    	
 	    	local c = white;
 

@@ -15,8 +15,8 @@ local libc = require("libc")
 
 local function main (argc, argv)
 
-    WIDTH = 40
-    HEIGHT = 40
+    local WIDTH = 40
+    local HEIGHT = 40
     
     local src1 = ffi.cast("uint32_t *", libc.malloc (WIDTH * HEIGHT * 4));
     local src2 = ffi.cast("uint32_t *", libc.malloc (WIDTH * HEIGHT * 4));
