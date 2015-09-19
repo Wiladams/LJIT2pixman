@@ -155,6 +155,60 @@ PIXMAN_yv12 = 0xc070000
 
 
 --[[
+    All the types that are declared in the library
+--]]
+local Types = {
+    pixman_bool_t = ffi.typeof("pixman_bool_t");
+    pixman_fixed_32_32_t = ffi.typeof("pixman_fixed_32_32_t");
+    pixman_fixed_48_16_t = ffi.typeof("pixman_fixed_48_16_t");
+    pixman_fixed_1_31_t = ffi.typeof("pixman_fixed_1_31_t");
+    pixman_fixed_1_16_t = ffi.typeof("pixman_fixed_1_16_t");
+    pixman_fixed_16_16_t = ffi.typeof("pixman_fixed_16_16_t");
+    pixman_fixed_t = ffi.typeof("pixman_fixed_t");
+
+    pixman_color = ffi.typeof("struct pixman_color");
+    pixman_point_fixed = ffi.typeof("struct pixman_point_fixed");
+    pixman_line_fixed = ffi.typeof("struct pixman_line_fixed");
+
+    pixman_vector = ffi.typeof("struct pixman_vector");
+    pixman_transform = ffi.typeof("struct pixman_transform");
+
+    -- floating point matrices
+    pixman_f_transform_t = ffi.typeof("pixman_f_transform_t");
+    pixman_f_vector_t = ffi.typeof("pixman_f_vector_t");
+    pixman_f_vector = ffi.typeof("struct pixman_f_vector");
+    pixman_f_transform = ffi.typeof("struct pixman_f_transform");
+
+    -- Regions
+    pixman_region16_data_t = ffi.typeof("pixman_region16_data_t");
+    pixman_box16_t = ffi.typeof("pixman_box16_t");
+    pixman_rectangle16_t = ffi.typeof("pixman_rectangle16_t");
+    pixman_region16_t = ffi.typeof("pixman_region16_t");
+
+    pixman_region16_data = ffi.typeof("struct pixman_region16_data");
+    pixman_rectangle16 = ffi.typeof("struct pixman_rectangle16");
+    pixman_box16 = ffi.typeof("struct pixman_box16");
+    pixman_region16 = ffi.typeof("struct pixman_region16");
+
+    pixman_gradient_stop = ffi.typeof("struct pixman_gradient_stop");
+    pixman_indexed = ffi.typeof("struct pixman_indexed");
+
+    -- 32-bit regions
+    pixman_region32_data = ffi.typeof("struct pixman_region32_data");
+    pixman_rectangle32 = ffi.typeof("struct pixman_rectangle32");
+    pixman_box32 = ffi.typeof("struct pixman_box32");
+    pixman_region32 = ffi.typeof("struct pixman_region32");
+
+    pixman_glyph_t = ffi.typeof("pixman_glyph_t");
+
+    pixman_edge = ffi.typeof("struct pixman_edge");
+    pixman_trapezoid = ffi.typeof("struct pixman_trapezoid");
+    pixman_triangle = ffi.typeof("struct pixman_triangle");
+    pixman_span_fix = ffi.typeof("struct pixman_span_fix");
+    pixman_trap = ffi.typeof("struct pixman_trap");
+}
+
+--[[
     Filling out this list of functions is a convenience for putting the 
     functions pointers into the global namespace.  This table is needed
     in the least, as you can access the functions more quickly using the
@@ -190,6 +244,11 @@ local Functions = {
 
     -- Region32
     -- Miscellaneous
+    pixman_blt = Lib_pixman.pixman_blt;
+    pixman_fill = Lib_pixman.pixman_fill;
+    pixman_version = Lib_pixman.pixman_version;
+    pixman_version_string = Lib_pixman.pixman_version_string;
+
     -- Image Constructors
     pixman_image_create_solid_fill = Lib_pixman.pixman_image_create_solid_fill;
     pixman_image_create_linear_gradient = Lib_pixman.pixman_image_create_linear_gradient;
@@ -262,6 +321,7 @@ local exports = {
     Constants = Constants;
     Enums = Enums;
     Functions = Functions;
+    Types = Types;
 }
 
 setmetatable(exports, {
@@ -278,6 +338,10 @@ setmetatable(exports, {
         end
 
         for k,v in pairs(self.Functions) do
+            tbl[k] = v;
+        end
+
+        for k,v in pairs(self.Types) do
             tbl[k] = v;
         end
         
