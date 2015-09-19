@@ -198,6 +198,12 @@ local Functions = {
     pixman_image_create_bits = Lib_pixman.pixman_image_create_bits;
     pixman_image_create_bits_no_clear = Lib_pixman.pixman_image_create_bits_no_clear;
 
+    -- Image Destructors
+    pixman_image_ref = Lib_pixman.pixman_image_ref;
+    pixman_image_unref = Lib_pixman.pixman_image_unref;
+    pixman_image_set_destroy_function = Lib_pixman.pixman_image_set_destroy_function;
+    pixman_image_get_destroy_data = Lib_pixman.pixman_image_get_destroy_data;
+
     -- Compositing
     pixman_compute_composite_region = Lib_pixman.pixman_compute_composite_region;
     pixman_image_composite = Lib_pixman.pixman_image_composite;

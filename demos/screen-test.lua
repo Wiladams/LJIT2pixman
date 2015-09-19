@@ -33,14 +33,14 @@ local function main (argc, argv)
 	   dest[i] = 0x0;
     end
 
-    local simg1 = pixman_image_create_bits (ENUM.PIXMAN_a8r8g8b8, WIDTH, HEIGHT, src1, WIDTH * 4);
-    local simg2 = pixman_image_create_bits (ENUM.PIXMAN_a8r8g8b8, WIDTH, HEIGHT, src2, WIDTH * 4);
-    local simg3 = pixman_image_create_bits (ENUM.PIXMAN_a8r8g8b8, WIDTH, HEIGHT, src3, WIDTH * 4);
-    local dimg  = pixman_image_create_bits (ENUM.PIXMAN_a8r8g8b8, 3 * WIDTH, 2 * HEIGHT, dest, 3 * WIDTH * 4);
+    local simg1 = pixman_image_create_bits (PIXMAN_a8r8g8b8, WIDTH, HEIGHT, src1, WIDTH * 4);
+    local simg2 = pixman_image_create_bits (PIXMAN_a8r8g8b8, WIDTH, HEIGHT, src2, WIDTH * 4);
+    local simg3 = pixman_image_create_bits (PIXMAN_a8r8g8b8, WIDTH, HEIGHT, src3, WIDTH * 4);
+    local dimg  = pixman_image_create_bits (PIXMAN_a8r8g8b8, 3 * WIDTH, 2 * HEIGHT, dest, 3 * WIDTH * 4);
 
-    pixman_image_composite (ENUM.PIXMAN_OP_SCREEN, simg1, NULL, dimg, 0, 0, 0, 0, WIDTH, HEIGHT / 4, WIDTH, HEIGHT);
-    pixman_image_composite (ENUM.PIXMAN_OP_SCREEN, simg2, NULL, dimg, 0, 0, 0, 0, (WIDTH/2), HEIGHT / 4 + HEIGHT / 2, WIDTH, HEIGHT);
-    pixman_image_composite (ENUM.PIXMAN_OP_SCREEN, simg3, NULL, dimg, 0, 0, 0, 0, (4 * WIDTH) / 3, HEIGHT, WIDTH, HEIGHT);
+    pixman_image_composite (PIXMAN_OP_SCREEN, simg1, NULL, dimg, 0, 0, 0, 0, WIDTH, HEIGHT / 4, WIDTH, HEIGHT);
+    pixman_image_composite (PIXMAN_OP_SCREEN, simg2, NULL, dimg, 0, 0, 0, 0, (WIDTH/2), HEIGHT / 4 + HEIGHT / 2, WIDTH, HEIGHT);
+    pixman_image_composite (PIXMAN_OP_SCREEN, simg3, NULL, dimg, 0, 0, 0, 0, (4 * WIDTH) / 3, HEIGHT, WIDTH, HEIGHT);
 
     save_image (dimg, "screen-test.ppm");
     
