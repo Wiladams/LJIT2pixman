@@ -6,11 +6,8 @@ local band = bit.band
 local lshift, rshift = bit.lshift, bit.rshift
 
 local pixman = require("pixman")()
-local pixlib = pixman.Lib_pixman;
-local ENUM = ffi.C
-local utils = require("utils")
-local save_image = utils.save_image;
-local libc = require("libc")
+local save_image = require("utils").save_image;
+local libc = require("libc")()
 
 
 local function main (argc, argv)
@@ -18,10 +15,10 @@ local function main (argc, argv)
     local WIDTH = 40
     local HEIGHT = 40
     
-    local src1 = ffi.cast("uint32_t *", libc.malloc (WIDTH * HEIGHT * 4));
-    local src2 = ffi.cast("uint32_t *", libc.malloc (WIDTH * HEIGHT * 4));
-    local src3 = ffi.cast("uint32_t *", libc.malloc (WIDTH * HEIGHT * 4));
-    local dest = ffi.cast("uint32_t *", libc.malloc (3 * WIDTH * 2 * HEIGHT * 4));
+    local src1 = ffi.cast("uint32_t *", malloc (WIDTH * HEIGHT * 4));
+    local src2 = ffi.cast("uint32_t *", malloc (WIDTH * HEIGHT * 4));
+    local src3 = ffi.cast("uint32_t *", malloc (WIDTH * HEIGHT * 4));
+    local dest = ffi.cast("uint32_t *", malloc (3 * WIDTH * 2 * HEIGHT * 4));
 
     for i = 0, (WIDTH * HEIGHT)-1 do
 	   src1[i] = 0x7ff00000;

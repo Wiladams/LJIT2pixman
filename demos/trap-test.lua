@@ -13,7 +13,7 @@ local function main (argc, argv)
     local WIDTH = 200;
     local HEIGHT = 200;
 
-    local white = ffi.new("pixman_color_t", { 0x0000, 0xffff, 0x0000, 0xffff });
+    local white = pixman_color({ 0x0000, 0xffff, 0x0000, 0xffff });
     local bits = ffi.cast("uint32_t *", malloc (WIDTH * HEIGHT * 4));
     local mbits = ffi.cast("uint32_t *", malloc (WIDTH * HEIGHT));
 
