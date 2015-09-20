@@ -48,12 +48,12 @@ local HEIGHT = 200
 
     
     local src_img = pixlib.pixman_image_create_solid_fill (color);
-    local dest_img = pixlib.pixman_image_create_bits (ENUM.PIXMAN_a8r8g8b8, WIDTH, HEIGHT, bits, WIDTH * 4);
+    local dest_img = pixlib.pixman_image_create_bits (PIXMAN_a8r8g8b8, WIDTH, HEIGHT, bits, WIDTH * 4);
     
-    pixlib.pixman_composite_triangles (ENUM.PIXMAN_OP_ATOP_REVERSE,
+    pixlib.pixman_composite_triangles (PIXMAN_OP_ATOP_REVERSE,
 				src_img,
 				dest_img,
-				ENUM.PIXMAN_a8,
+				PIXMAN_a8,
 				200, 200,
 				-5, 5,
               ARRAY_LENGTH (tris), tris);

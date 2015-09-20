@@ -42,8 +42,6 @@ local function draw_checkerboard (image,check_size, color1, color2)
     local n_checks_x = floor((pixlib.pixman_image_get_width (image) + check_size - 1) / check_size);
     local n_checks_y = floor((pixlib.pixman_image_get_height (image) + check_size - 1) / check_size);
 
-print("checks_x, checks_y: ", n_checks_x, n_checks_y)
-
     for j = 0, n_checks_y-1 do
 		for i = 0, n_checks_x-1 do
 	
@@ -121,7 +119,6 @@ local function save_image(img, filename)
 	local stride = tonumber(pixlib.pixman_image_get_stride(img));
 	local bits = pixlib.pixman_image_get_data(img);
 
-
 	write_PPM_binary(filename, bits, width, height, stride)
 end
 
@@ -132,7 +129,16 @@ local exports = {
 	draw_checkerboard = draw_checkerboard;
 	print_image = print_image;
 	save_image = save_image;
-
 }
+setmetatable(exports, {
+	__call = function(self, tbl)
+		tbl = tbl or _G;
+		for k,v in pairs(self) do
+			tbl[k] = v;
+		end
+
+		return self;
+	end,
+})
 
 return exports

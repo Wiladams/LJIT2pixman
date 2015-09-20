@@ -191,6 +191,7 @@ local Types = {
     pixman_region16 = ffi.typeof("struct pixman_region16");
 
     pixman_gradient_stop = ffi.typeof("struct pixman_gradient_stop");
+ 
     pixman_indexed = ffi.typeof("struct pixman_indexed");
 
     -- 32-bit regions
@@ -208,6 +209,8 @@ local Types = {
     pixman_trap = ffi.typeof("struct pixman_trap");
 }
 
+Types.pixman_gradient_stop_t = Types.pixman_gradient_stop;
+
 --[[
     Filling out this list of functions is a convenience for putting the 
     functions pointers into the global namespace.  This table is needed
@@ -216,6 +219,39 @@ local Types = {
 --]]
 local Functions = {
     -- Transforms
+    pixman_transform_init_identity = Lib_pixman.pixman_transform_init_identity;
+    pixman_transform_point_3d = Lib_pixman.pixman_transform_point_3d;
+    pixman_transform_point = Lib_pixman.pixman_transform_point;
+    pixman_transform_multiply = Lib_pixman.pixman_transform_multiply;
+    pixman_transform_init_scale = Lib_pixman.pixman_transform_init_scale;
+    pixman_transform_scale = Lib_pixman.pixman_transform_scale;
+    pixman_transform_init_rotate = Lib_pixman.pixman_transform_init_rotate;
+    pixman_transform_rotate = Lib_pixman.pixman_transform_rotate;
+    pixman_transform_init_translate = Lib_pixman.pixman_transform_init_translate;
+    pixman_transform_translate = Lib_pixman.pixman_transform_translate;
+    pixman_transform_bounds = Lib_pixman.pixman_transform_bounds;
+    pixman_transform_invert = Lib_pixman.pixman_transform_invert;
+    pixman_transform_is_identity = Lib_pixman.pixman_transform_is_identity;
+    pixman_transform_is_scale = Lib_pixman.pixman_transform_is_scale;
+    pixman_transform_is_int_translate = Lib_pixman.pixman_transform_is_int_translate;
+    pixman_transform_is_inverse = Lib_pixman.pixman_transform_is_inverse;
+
+    -- Floating point transforms
+    pixman_transform_from_pixman_f_transform= Lib_pixman.pixman_transform_from_pixman_f_transform;
+    pixman_f_transform_from_pixman_transform= Lib_pixman.pixman_f_transform_from_pixman_transform;
+    pixman_f_transform_invert= Lib_pixman.pixman_f_transform_invert;
+    pixman_f_transform_point= Lib_pixman.pixman_f_transform_point;
+    pixman_f_transform_point_3d= Lib_pixman.pixman_f_transform_point_3d;
+    pixman_f_transform_multiply= Lib_pixman.pixman_f_transform_multiply;
+    pixman_f_transform_init_scale= Lib_pixman.pixman_f_transform_init_scale;
+    pixman_f_transform_scale= Lib_pixman.pixman_f_transform_scale;
+    pixman_f_transform_init_rotate= Lib_pixman.pixman_f_transform_init_rotate;
+    pixman_f_transform_rotate= Lib_pixman.pixman_f_transform_rotate;
+    pixman_f_transform_init_translate= Lib_pixman.pixman_f_transform_init_translate;
+    pixman_f_transform_translate= Lib_pixman.pixman_f_transform_translate;
+    pixman_f_transform_bounds= Lib_pixman.pixman_f_transform_bounds;
+    pixman_f_transform_init_identity= Lib_pixman.pixman_f_transform_init_identity;
+
     -- Regions
     pixman_region_init = Lib_pixman.pixman_region_init;
     pixman_region_init_rect = Lib_pixman.pixman_region_init_rect;
@@ -262,6 +298,26 @@ local Functions = {
     pixman_image_unref = Lib_pixman.pixman_image_unref;
     pixman_image_set_destroy_function = Lib_pixman.pixman_image_set_destroy_function;
     pixman_image_get_destroy_data = Lib_pixman.pixman_image_get_destroy_data;
+
+    -- Image Properties
+    pixman_image_set_clip_region = Lib_pixman.pixman_image_set_clip_region;
+    pixman_image_set_clip_region32 = Lib_pixman.pixman_image_set_clip_region32;
+    pixman_image_set_has_client_clip = Lib_pixman.pixman_image_set_has_client_clip;
+    pixman_image_set_transform = Lib_pixman.pixman_image_set_transform;
+    pixman_image_set_repeat = Lib_pixman.pixman_image_set_repeat;
+    pixman_image_set_filter = Lib_pixman.pixman_image_set_filter;
+    pixman_image_set_source_clipping = Lib_pixman.pixman_image_set_source_clipping;
+    pixman_image_set_alpha_map = Lib_pixman.pixman_image_set_alpha_map;
+    pixman_image_set_component_alpha = Lib_pixman.pixman_image_set_component_alpha;
+    pixman_image_get_component_alpha = Lib_pixman.pixman_image_get_component_alpha;
+    pixman_image_set_accessors = Lib_pixman.pixman_image_set_accessors;
+    pixman_image_set_indexed = Lib_pixman.pixman_image_set_indexed;
+    pixman_image_get_data = Lib_pixman.pixman_image_get_data;
+    pixman_image_get_width = Lib_pixman.pixman_image_get_width;
+    pixman_image_get_height = Lib_pixman.pixman_image_get_height;
+    pixman_image_get_stride = Lib_pixman.pixman_image_get_stride;
+    pixman_image_get_depth = Lib_pixman.pixman_image_get_depth;
+    pixman_image_get_format = Lib_pixman.pixman_image_get_format;
 
     -- Compositing
     pixman_compute_composite_region = Lib_pixman.pixman_compute_composite_region;
