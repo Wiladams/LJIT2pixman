@@ -36,15 +36,12 @@ local HEIGHT = 200
     local color = ffi.new("pixman_color_t", { 0x4444, 0x4444, 0xffff, 0xffff });
     local bits = ffi.cast("uint32_t *", libc.malloc (WIDTH * HEIGHT * 4));
     
-    --local i = 0;
-    --while (i < WIDTH * HEIGHT) do
-    --    i = i + 1;
-    --    bits[i] = (i / HEIGHT) * 0x01010000;
-    --end
 
-    --for (i = 0; i < WIDTH * HEIGHT; ++i)
-    --bits[i] = (i / HEIGHT) * 0x01010000;
-
+    -- not quite sure what this should look like
+    for i = 0, (WIDTH * HEIGHT)-1 do
+        local value = math.floor((i / HEIGHT) * 0x01010000);
+        bits[i] = value;
+    end
 
     
     local src_img = pixlib.pixman_image_create_solid_fill (color);
